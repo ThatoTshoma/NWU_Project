@@ -231,211 +231,268 @@ namespace PostGradSystem.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.Examiner", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Assessment", b =>
                 {
-                    b.Property<int>("ExaminerId")
+                    b.Property<int>("AssessmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExaminerId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentId"));
 
-                    b.Property<string>("Email")
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.HasKey("AssessmentId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("Assessments");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Attendance", b =>
+                {
+                    b.Property<int>("AttendanceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendanceId"));
+
+                    b.Property<double>("AttendancePercentage")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttendanceId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Attendances");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.BackroundCheck", b =>
+                {
+                    b.Property<int>("BackroundCheckId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BackroundCheckId"));
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasCriminalRecord")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BackroundCheckId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("BackroundChecks");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProgrammeId")
-                        .HasColumnType("int");
+                    b.HasKey("DepartmentId");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("FacultyId");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExaminerId");
-
-                    b.HasIndex("ProgrammeId");
-
-                    b.ToTable("Examiners");
+                    b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.Milestone", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Employability", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployabilityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployabilityId"));
 
-                    b.Property<int>("DisplayOrder")
+                    b.Property<string>("Recommendation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployabilityId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Employabilities");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Enrollment", b =>
+                {
+                    b.Property<int>("EnrollmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrollmentId"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("EnrollmentId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Enrollments");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Faculty", b =>
+                {
+                    b.Property<int>("FacultyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FacultyId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FacultyId");
+
+                    b.ToTable("Faculties");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Graduation", b =>
+                {
+                    b.Property<int>("GraduationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GraduationId"));
+
+                    b.Property<int>("CreditCompleted")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreditsRequired")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExpectedYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GraduationId");
+
+                    b.ToTable("Graduations");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Module", b =>
+                {
+                    b.Property<int>("ModuleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Creits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ModuleId");
 
-                    b.ToTable("Milestones");
+                    b.HasIndex("DepartmentId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DisplayOrder = 1,
-                            Name = "Coursework modules"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DisplayOrder = 2,
-                            Name = "Title registration approved by Higher Degrees Committee"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DisplayOrder = 3,
-                            Name = "Data analysis"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DisplayOrder = 4,
-                            Name = "Chapter 3"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DisplayOrder = 5,
-                            Name = "Chapter 6"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            DisplayOrder = 6,
-                            Name = "Chapter 9"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            DisplayOrder = 7,
-                            Name = "Resubmission process"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            DisplayOrder = 8,
-                            Name = "Research proposal"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            DisplayOrder = 9,
-                            Name = "Functionaries approved by Higher Degrees Committee"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            DisplayOrder = 10,
-                            Name = "Chapter 1"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            DisplayOrder = 11,
-                            Name = "Chapter 4"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            DisplayOrder = 12,
-                            Name = "Chapter 7"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            DisplayOrder = 13,
-                            Name = "Finalising"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            DisplayOrder = 14,
-                            Name = "Proof of progress included"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            DisplayOrder = 15,
-                            Name = "Ethics approval"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            DisplayOrder = 16,
-                            Name = "Data collection"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            DisplayOrder = 17,
-                            Name = "Chapter 2"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            DisplayOrder = 18,
-                            Name = "Chapter 5"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            DisplayOrder = 19,
-                            Name = "Chapter 8"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            DisplayOrder = 20,
-                            Name = "Submitted"
-                        });
+                    b.ToTable("Modules");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.MilestoneProgress", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Payment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PaymentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
-                    b.Property<int>("MilestoneId")
+                    b.Property<decimal>("AmountPaid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OutstandingBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                    b.HasKey("PaymentId");
 
-                    b.Property<int>("ProgressReportId")
-                        .HasColumnType("int");
+                    b.HasIndex("StudentId");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MilestoneId");
-
-                    b.HasIndex("ProgressReportId", "MilestoneId")
-                        .IsUnique();
-
-                    b.ToTable("MilestoneProgresses");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("PostGradSystem.Models.Programme", b =>
@@ -450,145 +507,56 @@ namespace PostGradSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Duration")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Qualification")
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProgrammeId");
 
+                    b.HasIndex("DepartmentId");
+
                     b.ToTable("Programmes");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.ProgressReport", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Result", b =>
                 {
-                    b.Property<int>("ProgressReportId")
+                    b.Property<int>("ResultId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressReportId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResultId"));
 
-                    b.Property<string>("ChairSignature")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DecisionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LackOfProgressReasons")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OtherInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverallRating")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PeriodFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PeriodTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PreviousWarningLetters")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProposedMitigation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ScientificCommitteeDecision")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentSignature")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SupervisorId")
+                    b.Property<int>("AssessmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SupervisorRecommendation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SupervisorSignature")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TitleRegistrationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ProgressReportId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.HasIndex("TitleRegistrationId");
-
-                    b.ToTable("ProgressReports");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.ResearchProject", b =>
-                {
-                    b.Property<int>("ResearchProjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResearchProjectId"));
-
-                    b.Property<string>("FilePath")
+                    b.Property<string>("Grade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Mark")
+                        .HasColumnType("float");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TitleRegistrationId")
-                        .HasColumnType("int");
+                    b.HasKey("ResultId");
 
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ResearchProjectId");
+                    b.HasIndex("AssessmentId");
 
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("TitleRegistrationId");
-
-                    b.ToTable("ResearchProjects");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.SciComChair", b =>
-                {
-                    b.Property<int>("SciComChairId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SciComChairId"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SciComChairId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SciComChairs");
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("PostGradSystem.Models.Student", b =>
@@ -599,15 +567,26 @@ namespace PostGradSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Initials")
+                    b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -625,10 +604,6 @@ namespace PostGradSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -639,97 +614,6 @@ namespace PostGradSystem.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.Supervision", b =>
-                {
-                    b.Property<int>("SupervisionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupervisionId"));
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupervisorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SupervisionId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Supervisions");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.Supervisor", b =>
-                {
-                    b.Property<int>("SupervisorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupervisorId"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SupervisorId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Supervisors");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.TitleRegistration", b =>
-                {
-                    b.Property<int>("TitleRegistrationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TitleRegistrationId"));
-
-                    b.Property<DateTime>("DateRegistered")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OcidId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TitleRegistrationId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("TitleRegistrations");
                 });
 
             modelBuilder.Entity("PostGradSystem.Models.UniversityStudent", b =>
@@ -828,56 +712,37 @@ namespace PostGradSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.Examiner", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Assessment", b =>
                 {
-                    b.HasOne("PostGradSystem.Models.Programme", "Programme")
+                    b.HasOne("PostGradSystem.Models.Module", "Module")
                         .WithMany()
-                        .HasForeignKey("ProgrammeId")
+                        .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Programme");
+                    b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.MilestoneProgress", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Attendance", b =>
                 {
-                    b.HasOne("PostGradSystem.Models.Milestone", "Milestone")
+                    b.HasOne("PostGradSystem.Models.Module", "Module")
                         .WithMany()
-                        .HasForeignKey("MilestoneId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("PostGradSystem.Models.ProgressReport", "ProgressReport")
-                        .WithMany("Milestones")
-                        .HasForeignKey("ProgressReportId")
+                        .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Milestone");
-
-                    b.Navigation("ProgressReport");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.ProgressReport", b =>
-                {
-                    b.HasOne("PostGradSystem.Models.Supervisor", "Supervisor")
+                    b.HasOne("PostGradSystem.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostGradSystem.Models.TitleRegistration", "TitleRegistration")
-                        .WithMany()
-                        .HasForeignKey("TitleRegistrationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Module");
 
-                    b.Navigation("Supervisor");
-
-                    b.Navigation("TitleRegistration");
+                    b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.ResearchProject", b =>
+            modelBuilder.Entity("PostGradSystem.Models.BackroundCheck", b =>
                 {
                     b.HasOne("PostGradSystem.Models.Student", "Student")
                         .WithMany()
@@ -885,26 +750,100 @@ namespace PostGradSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostGradSystem.Models.TitleRegistration", "TitleRegistration")
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Department", b =>
+                {
+                    b.HasOne("PostGradSystem.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("TitleRegistrationId")
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Employability", b =>
+                {
+                    b.HasOne("PostGradSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Student");
-
-                    b.Navigation("TitleRegistration");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.SciComChair", b =>
+            modelBuilder.Entity("PostGradSystem.Models.Enrollment", b =>
                 {
-                    b.HasOne("PostGradSystem.Data.ApplicationUser", "User")
+                    b.HasOne("PostGradSystem.Models.Module", "Module")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("PostGradSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Module", b =>
+                {
+                    b.HasOne("PostGradSystem.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Payment", b =>
+                {
+                    b.HasOne("PostGradSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Programme", b =>
+                {
+                    b.HasOne("PostGradSystem.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("PostGradSystem.Models.Result", b =>
+                {
+                    b.HasOne("PostGradSystem.Models.Assessment", "Assessment")
+                        .WithMany()
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PostGradSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assessment");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("PostGradSystem.Models.Student", b =>
@@ -926,47 +865,6 @@ namespace PostGradSystem.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PostGradSystem.Models.Supervision", b =>
-                {
-                    b.HasOne("PostGradSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PostGradSystem.Models.Supervisor", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.Supervisor", b =>
-                {
-                    b.HasOne("PostGradSystem.Data.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.TitleRegistration", b =>
-                {
-                    b.HasOne("PostGradSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("PostGradSystem.Models.UniversityStudent", b =>
                 {
                     b.HasOne("PostGradSystem.Models.Programme", "Programme")
@@ -976,11 +874,6 @@ namespace PostGradSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Programme");
-                });
-
-            modelBuilder.Entity("PostGradSystem.Models.ProgressReport", b =>
-                {
-                    b.Navigation("Milestones");
                 });
 #pragma warning restore 612, 618
         }

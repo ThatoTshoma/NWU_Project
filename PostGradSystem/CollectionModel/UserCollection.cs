@@ -9,8 +9,6 @@ namespace PostGradSystem.CollectionModel
         public InputModel ApplicationUser { get; set; }
         public ApplicationUser ApplicationUsers { get; set; }
         public Student Student { get; set; }
-        public Supervisor Supervisor { get; set; }
-        public SciComChair SciComChair { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

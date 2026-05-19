@@ -4,7 +4,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-.clearfix::after {
+.clearfix after {
   display: block;
   clear: both;
   content: "";
@@ -70,7 +70,7 @@
   position: relative;
   width: 100%;
 }
-.ratio::before {
+.ratio before {
   display: block;
   padding-top: var(--bs-aspect-ratio);
   content: "";
@@ -189,7 +189,7 @@
   border: 0 !important;
 }
 
-.stretched-link::after {
+.stretched-link after {
   position: absolute;
   top: 0;
   right: 0;

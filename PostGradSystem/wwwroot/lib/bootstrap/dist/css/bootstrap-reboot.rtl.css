@@ -6,8 +6,8 @@
  * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md)
  */
 *,
-*::before,
-*::after {
+* before,
+* after {
   box-sizing: border-box;
 }
 
@@ -309,7 +309,7 @@ select:disabled {
   opacity: 1;
 }
 
-[list]::-webkit-calendar-picker-indicator {
+[list] -webkit-calendar-picker-indicator {
   display: none;
 }
 
@@ -326,7 +326,7 @@ button:not(:disabled),
   cursor: pointer;
 }
 
-::-moz-focus-inner {
+ -moz-focus-inner {
   padding: 0;
   border-style: none;
 }
@@ -359,17 +359,17 @@ legend + * {
   clear: right;
 }
 
-::-webkit-datetime-edit-fields-wrapper,
-::-webkit-datetime-edit-text,
-::-webkit-datetime-edit-minute,
-::-webkit-datetime-edit-hour-field,
-::-webkit-datetime-edit-day-field,
-::-webkit-datetime-edit-month-field,
-::-webkit-datetime-edit-year-field {
+ -webkit-datetime-edit-fields-wrapper,
+ -webkit-datetime-edit-text,
+ -webkit-datetime-edit-minute,
+ -webkit-datetime-edit-hour-field,
+ -webkit-datetime-edit-day-field,
+ -webkit-datetime-edit-month-field,
+ -webkit-datetime-edit-year-field {
   padding: 0;
 }
 
-::-webkit-inner-spin-button {
+ -webkit-inner-spin-button {
   height: auto;
 }
 
@@ -384,19 +384,19 @@ legend + * {
 [type="number"] {
   direction: ltr;
 }
-::-webkit-search-decoration {
+ -webkit-search-decoration {
   -webkit-appearance: none;
 }
 
-::-webkit-color-swatch-wrapper {
+ -webkit-color-swatch-wrapper {
   padding: 0;
 }
 
-::file-selector-button {
+ file-selector-button {
   font: inherit;
 }
 
-::-webkit-file-upload-button {
+ -webkit-file-upload-button {
   font: inherit;
   -webkit-appearance: button;
 }

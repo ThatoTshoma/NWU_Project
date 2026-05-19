@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PostGradSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ad7d2937d56f4b16ed47120280c86c47cf8c159")]
 [assembly: System.Reflection.AssemblyProductAttribute("PostGradSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PostGradSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
-using PostGradSystem.CollectionModel;
 using PostGradSystem.Data;
 using PostGradSystem.Models;
 using PostGradSystem.Services;
@@ -85,8 +84,6 @@ namespace PostGradSystem.Controllers
                 {
                     Name = universityStudent.Name,
                     Surname = universityStudent.Surname,
-                    Initials = universityStudent.Initials,
-                    Title = universityStudent.Title,
                     StudentNumber = universityStudent.StudentId,
                     Status = "Active",
                     UserId = user.Id,
@@ -142,259 +139,165 @@ namespace PostGradSystem.Controllers
             var student = await _db.Students.ToListAsync();
             return View(student);
         }
-        public IActionResult AddUser()
-        {
-            var userCollection = new UserCollection();
-            return View(userCollection);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUser(UserCollection model)
-        {
-            var existingUser = await _userManager.FindByEmailAsync(model.ApplicationUser.Email);
-            if (existingUser != null)
-            {
-                TempData["error"] = "A user with this email already exists.";
-                return View(model);
-            }
-            var generatedPassword = GenerateRandomPassword();
+        //public IActionResult AddUser()
+        //{
+        //    var userCollection = new UserCollection();
+        //    return View(userCollection);
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddUser(UserCollection model)
+        //{
+        //    var existingUser = await _userManager.FindByEmailAsync(model.ApplicationUser.Email);
+        //    if (existingUser != null)
+        //    {
+        //        TempData["error"] = "A user with this email already exists.";
+        //        return View(model);
+        //    }
+        //    var generatedPassword = GenerateRandomPassword();
 
-            var user = new ApplicationUser
-            {
-                UserName = GenerateUserName(model.ApplicationUser.Email),
-                Email = model.ApplicationUser.Email,
-                UserRole = model.ApplicationUser.UserRole
-            };
+        //    var user = new ApplicationUser
+        //    {
+        //        UserName = GenerateUserName(model.ApplicationUser.Email),
+        //        Email = model.ApplicationUser.Email,
+        //        UserRole = model.ApplicationUser.UserRole
+        //    };
 
-            var result = await _userManager.CreateAsync(user, generatedPassword);
-            string userFirstName;
+        //    var result = await _userManager.CreateAsync(user, generatedPassword);
+        //    string userFirstName;
 
-            if (model.ApplicationUser.UserRole == "Supervisor")
-                userFirstName = model.Supervisor.Name + " " + model.Supervisor.Surname;
-            else if (model.ApplicationUser.UserRole == "SciComChair")
-                userFirstName = model.SciComChair.Name + " " + model.SciComChair.Surname;
-            else
-                userFirstName = "User";
-
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, user.UserRole);
-
-                _myEmailSender.SendEmail(user.Email,
-                            "Portal Credentials",
-                            $@"
-                            <p>Dear {userFirstName},</p>
-                            <p>Welcome! We are excited to have you on board. Below are your login credentials:</p>
-                            <ul>
-                                <li><strong>Username:</strong> {user.UserName}</li>
-                                <li><strong>Password:</strong> {generatedPassword}</li>
-                            </ul>
-                            <p>If you encounter any issues, feel free to reach out to our support team at mycode1997@gmail.com.</p>
-                            <p>Kind regards,</p>
-                            <p>The E-Prescribing Admin</p>"
-
-                );
-
-                if (user.UserRole == "Supervisor")
-                {
-                    var supervisor = new Supervisor
-                    {
-                        Name = model.Supervisor.Name,
-                        Surname = model.Supervisor.Surname,
-                        Email = model.ApplicationUser.Email,
-                        UserId = user.Id,
-                    };
-                    _db.Supervisors.Add(supervisor);
-                }
-                else if (user.UserRole == "SciComChair")
-                {
-                    var sciComChair = new SciComChair
-                    {
-                        Name = model.SciComChair.Name,
-                        Surname = model.SciComChair.Surname,
-                        Email = model.ApplicationUser.Email,
-                        UserId = user.Id,
-                    };
-                    _db.SciComChairs.Add(sciComChair);
-                }
-                await _db.SaveChangesAsync();
-
-                if (user.UserRole == "Supervisor")
-                {
-                    return RedirectToAction("ListSupervisor");
-                }
-                else if (user.UserRole == "SciComChair")
-                {
-                    return RedirectToAction("ListSciComChair");
-                }
-                else
-                {
-                    View(model);
-                }
-
-            }
-            return View(model);
-        }
-        public async Task<IActionResult> ListSupervisor()
-        {
-            var users = await _userManager.Users.ToListAsync();
-
-            var userList = new List<UserViewModel>();
-
-            foreach (var user in users)
-            {
-                var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-
-                if (userRole == "Supervisor")
-                {
-                    var supervisor = await _db.Supervisors.FirstOrDefaultAsync(n => n.UserId == user.Id);
-                    if (supervisor != null)
-                    {
-                        userList.Add(new UserViewModel
-                        {
-                            UserName = user.UserName,
-                            Email = user.Email,
-                            UserRole = userRole,
-                            Name = supervisor.Name,
-                            Surname = supervisor.Surname,
-                            SupervisorId = supervisor.SupervisorId  
+        //    if (model.ApplicationUser.UserRole == "Supervisor")
+        //        userFirstName = model.Supervisor.Name + " " + model.Supervisor.Surname;
+        //    else if (model.ApplicationUser.UserRole == "SciComChair")
+        //        userFirstName = model.SciComChair.Name + " " + model.SciComChair.Surname;
+        //    else
+        //        userFirstName = "User";
 
 
-                        });
-                    }
-                }
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        await _userManager.AddToRoleAsync(user, user.UserRole);
 
-            return View(userList);
-        }
-        public async Task<IActionResult> ListSciComChair()
-        {
-            var users = await _userManager.Users.ToListAsync();
+        //        _myEmailSender.SendEmail(user.Email,
+        //                    "Portal Credentials",
+        //                    $@"
+        //                    <p>Dear {userFirstName},</p>
+        //                    <p>Welcome! We are excited to have you on board. Below are your login credentials:</p>
+        //                    <ul>
+        //                        <li><strong>Username:</strong> {user.UserName}</li>
+        //                        <li><strong>Password:</strong> {generatedPassword}</li>
+        //                    </ul>
+        //                    <p>If you encounter any issues, feel free to reach out to our support team at mycode1997@gmail.com.</p>
+        //                    <p>Kind regards,</p>
+        //                    <p>The E-Prescribing Admin</p>"
 
-            var userList = new List<UserViewModel>();
+        //        );
 
-            foreach (var user in users)
-            {
-                var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+        //        if (user.UserRole == "Supervisor")
+        //        {
+        //            var supervisor = new Supervisor
+        //            {
+        //                Name = model.Supervisor.Name,
+        //                Surname = model.Supervisor.Surname,
+        //                Email = model.ApplicationUser.Email,
+        //                UserId = user.Id,
+        //            };
+        //            _db.Supervisors.Add(supervisor);
+        //        }
+        //        else if (user.UserRole == "SciComChair")
+        //        {
+        //            var sciComChair = new SciComChair
+        //            {
+        //                Name = model.SciComChair.Name,
+        //                Surname = model.SciComChair.Surname,
+        //                Email = model.ApplicationUser.Email,
+        //                UserId = user.Id,
+        //            };
+        //            _db.SciComChairs.Add(sciComChair);
+        //        }
+        //        await _db.SaveChangesAsync();
 
-                if (userRole == "SciComChair")
-                {
-                    var sciComChair = await _db.SciComChairs.FirstOrDefaultAsync(n => n.UserId == user.Id);
-                    if (sciComChair != null)
-                    {
-                        userList.Add(new UserViewModel
-                        {
-                            UserName = user.UserName,
-                            Email = user.Email,
-                            UserRole = userRole,
-                            Name = sciComChair.Name,
-                            Surname = sciComChair.Surname,
-                            SupervisorId = sciComChair.SciComChairId
+        //        if (user.UserRole == "Supervisor")
+        //        {
+        //            return RedirectToAction("ListSupervisor");
+        //        }
+        //        else if (user.UserRole == "SciComChair")
+        //        {
+        //            return RedirectToAction("ListSciComChair");
+        //        }
+        //        else
+        //        {
+        //            View(model);
+        //        }
 
+        //    }
+        //    return View(model);
+        //}
+        //public async Task<IActionResult> ListSupervisor()
+        //{
+        //    var users = await _userManager.Users.ToListAsync();
 
-                        });
-                    }
-                }
-            }
+        //    var userList = new List<UserViewModel>();
 
-            return View(userList);
-        }
+        //    foreach (var user in users)
+        //    {
+        //        var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
-        public async Task<IActionResult> AssignSupervisor(int id)
-        {
-            var model = new SupervisionCollection
-            {
-                Supervision = new Supervision
-                {
-                    SupervisorId = id
-                },
-
-                Students = await _db.Students.ToListAsync()
-            };
-            ViewBag.StudentList = new SelectList(_db.Students, "StudentId", "DisplayText");
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AssignSupervisor(SupervisionCollection model)
-        {
-
-            var supervisor = await _db.Supervisors.FirstOrDefaultAsync(s => s.SupervisorId == model.Supervision.SupervisorId);
-
-            if (supervisor == null)
-            {
-                TempData["error"] = "Supervisor not found.";
-                return RedirectToAction("ListSupervisor");
-            }
-
-            var studentNames = new List<string>();
-
-            foreach (var studentId in model.Supervision.SelectedStudents)
-            {
-                var student = await _db.Students.FindAsync(studentId);
-
-                if (student == null) continue;
-
-                var exists = await _db.Supervisions.AnyAsync(s =>
-                    s.StudentId == studentId &&
-                    s.SupervisorId == supervisor.SupervisorId);
-
-                if (exists) continue;
-
-                var supervision = new Supervision
-                {
-                    StudentId = studentId,
-                    SupervisorId = supervisor.SupervisorId,
-                };
-
-                _db.Supervisions.Add(supervision);
-
-                string studentFullName = $"{student.Name} {student.Surname}";
-                string supervisorFullName = $"{supervisor.Name} {supervisor.Surname}";
-
-                studentNames.Add(studentFullName);
-
-                string studentMessage = $@"
-                                        Dear {studentFullName},<br><br>
-                                        You have been assigned to supervisor: {supervisorFullName}.<br><br>
-                                        Kind regards,<br>
-                                        Admin";
-
-                _myEmailSender.SendEmail(student.Email, "Supervisor Assigned", studentMessage);
-            }
-
-            await _db.SaveChangesAsync();
-
-            if (studentNames.Any())
-            {
-                string supervisorFullName = $"{supervisor.Name} {supervisor.Surname}";
-
-                string supervisorMessage = $@"
-                                        Dear {supervisorFullName},<br><br>
-                                        You have been assigned the following students:<br><br>
-                                        {string.Join("<br>", studentNames)}<br><br>
-                                        Kind regards,<br>
-                                        Admin";
-
-                _myEmailSender.SendEmail(supervisor.Email, "Supervision Assignment", supervisorMessage);
-            }
-
-            TempData["success"] = "Students assigned successfully";
-            ViewBag.StudentList = new SelectList(_db.Students, "StudentId", "DisplayText");
+        //        if (userRole == "Supervisor")
+        //        {
+        //            var supervisor = await _db.Supervisors.FirstOrDefaultAsync(n => n.UserId == user.Id);
+        //            if (supervisor != null)
+        //            {
+        //                userList.Add(new UserViewModel
+        //                {
+        //                    UserName = user.UserName,
+        //                    Email = user.Email,
+        //                    UserRole = userRole,
+        //                    Name = supervisor.Name,
+        //                    Surname = supervisor.Surname,
+        //                    SupervisorId = supervisor.SupervisorId  
 
 
-            return RedirectToAction("ListStudentSupervisor", new { id = supervisor.SupervisorId });
-        }
+        //                });
+        //            }
+        //        }
+        //    }
 
-        public async Task<IActionResult> ListStudentSupervisor()
-        {
-            var supervision = await _db.Supervisions
-                .Include(s => s.Student)
-                .Include(s => s.Supervisor)
-                .ToListAsync();
-            return View(supervision);
-        }
+        //    return View(userList);
+        //}
+        //public async Task<IActionResult> ListSciComChair()
+        //{
+        //    var users = await _userManager.Users.ToListAsync();
+
+        //    var userList = new List<UserViewModel>();
+
+        //    foreach (var user in users)
+        //    {
+        //        var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+        //        if (userRole == "SciComChair")
+        //        {
+        //            var sciComChair = await _db.SciComChairs.FirstOrDefaultAsync(n => n.UserId == user.Id);
+        //            if (sciComChair != null)
+        //            {
+        //                userList.Add(new UserViewModel
+        //                {
+        //                    UserName = user.UserName,
+        //                    Email = user.Email,
+        //                    UserRole = userRole,
+        //                    Name = sciComChair.Name,
+        //                    Surname = sciComChair.Surname,
+        //                    SupervisorId = sciComChair.SciComChairId
+
+
+        //                });
+        //            }
+        //        }
+        //    }
+
+        //    return View(userList);
+        //}
+
 
 
         public static string GenerateRandomPassword(PasswordOptions opts = null)

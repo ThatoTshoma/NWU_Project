@@ -62,10 +62,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRkVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Admin/AssignSupervisor.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQXNzaWduU3VwZXJ2aXNvci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,20 +70,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTGlzdEZhY3VsdHlTdHVkZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Admin/ListSciComChair.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTGlzdFNjaUNvbUNoYWlyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Admin/ListStudent.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTGlzdFN0dWRlbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Admin/ListStudentSupervisor.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTGlzdFN0dWRlbnRTdXBlcnZpc29yLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Admin/ListSupervisor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTGlzdFN1cGVydmlzb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HomeSpace/NWU/INFS611/PostGradSystem/PostGradSystem/Views/Home/Index.cshtml]

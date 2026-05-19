@@ -334,7 +334,7 @@
 
   const namespaceRegex = /[^.]*(?=\..*)\.|.*/;
   const stripNameRegex = /\..*/;
-  const stripUidRegex = /::\d+$/;
+  const stripUidRegex = / \d+$/;
   const eventRegistry = {}; // Events storage
 
   let uidEvent = 1;
@@ -351,7 +351,7 @@
    */
 
   function getUidEvent(element, uid) {
-    return uid && `${uid}::${uidEvent++}` || element.uidEvent || uidEvent++;
+    return uid && `${uid} ${uidEvent++}` || element.uidEvent || uidEvent++;
   }
 
   function getEvent(element) {

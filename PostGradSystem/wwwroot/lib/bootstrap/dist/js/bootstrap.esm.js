@@ -330,7 +330,7 @@ const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed
 
 const namespaceRegex = /[^.]*(?=\..*)\.|.*/;
 const stripNameRegex = /\..*/;
-const stripUidRegex = /::\d+$/;
+const stripUidRegex = / \d+$/;
 const eventRegistry = {}; // Events storage
 
 let uidEvent = 1;
@@ -347,7 +347,7 @@ const nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'cont
  */
 
 function getUidEvent(element, uid) {
-  return uid && `${uid}::${uidEvent++}` || element.uidEvent || uidEvent++;
+  return uid && `${uid} ${uidEvent++}` || element.uidEvent || uidEvent++;
 }
 
 function getEvent(element) {

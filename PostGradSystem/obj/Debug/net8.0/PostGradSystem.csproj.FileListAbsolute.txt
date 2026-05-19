@@ -290,3 +290,4 @@ D:\HomeSpace\NWU\INFS611\PostGradSystem\PostGradSystem\bin\Debug\net8.0\MailKit.
 D:\HomeSpace\NWU\INFS611\PostGradSystem\PostGradSystem\bin\Debug\net8.0\MimeKit.dll
 D:\HomeSpace\NWU\INFS611\PostGradSystem\PostGradSystem\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\HomeSpace\NWU\INFS611\PostGradSystem\PostGradSystem\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\HomeSpace\NWU\INFS611\PostGradSystem\PostGradSystem\obj\Debug\net8.0\PostGradSystem.sourcelink.json
