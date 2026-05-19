@@ -1,0 +1,45 @@
+﻿@model List<Supervision>
+
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card shadow border-0 my-4">
+    <div class="card-body p-4">
+
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Student Surname</th>
+                    <th>Student Number</th>
+                    <th>Supervisor Name</th>
+                    <th>Supervisor Surname</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Student.Name</td>
+                        <td>@user.Student.Surname</td>
+                        <td>@user.Student.StudentNumber</td>
+                        <td>@user.Supervisor.Name</td>
+                        <td>@user.Supervisor.Surname</td>
+                  
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+        });
+
+
+
+    </script>
+}

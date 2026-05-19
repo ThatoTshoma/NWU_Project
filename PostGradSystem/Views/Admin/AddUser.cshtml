@@ -1,0 +1,112 @@
+﻿@using PostGradSystem.Data;
+@model PostGradSystem.CollectionModel.UserCollection
+
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card shadow border-0 mt-4">
+
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["error"]
+        </div>
+    }
+    <div class="card-body p-4">
+        <form method="post">
+            <div class="border p-3">
+
+                <div class="form-floating py-2 col-12">
+                    <select asp-for="ApplicationUser.UserRole" class="form-control" id="userRole">
+                        <option value="">Select User</option>
+                        <option value="Supervisor">Supervisor</option>
+                        <option value="SciComChair">SciComChair</option>
+                    </select>
+                    <label asp-for="ApplicationUser.UserRole"></label>
+                    <span asp-validation-for="ApplicationUser.UserRole" class="text-danger"></span>
+
+                </div>
+
+                <div id="supervisorFields" style="display:none;">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Supervisor.Name" class="form-control" aria-required="true" placeholder="Name" />
+                        <label asp-for="Supervisor.Name"></label>
+                        <span asp-validation-for="Supervisor.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Supervisor.Surname" class="form-control" aria-required="true" placeholder="Surname" type="text" />
+                        <label asp-for="Supervisor.Surname"></label>
+                        <span asp-validation-for="Supervisor.Surname" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div id="sciComChairFields" style="display:none;">
+                    <div class="form-floating mb-3">
+                        <input asp-for="SciComChair.Name" class="form-control" aria-required="true" placeholder="Name" />
+                        <label asp-for="SciComChair.Name"></label>
+                        <span asp-validation-for="SciComChair.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="SciComChair.Surname" class="form-control" aria-required="true" placeholder="Surname" type="text" />
+                        <label asp-for="SciComChair.Surname"></label>
+                        <span asp-validation-for="SciComChair.Surname" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div id="userCredentials" style="display:none;">
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="ApplicationUser.Email" class="form-control" aria-required="true" placeholder="Contact Number" type="text" />
+                        <label asp-for="ApplicationUser.Email"></label>
+                        <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-6 col-md-3">
+
+
+                            <button type="submit" class="btn btn-primary form-control">Add</button>
+
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a asp-controller="Admin" asp-action="ListUser" class="btn btn-outline-primary border  form-control">
+                                Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('userRole').addEventListener('change', function () {
+            var supervisorFields = document.getElementById('supervisorFields');
+            var sciComChairFields = document.getElementById('sciComChairFields');
+            var userCredentials = document.getElementById('userCredentials');
+
+            if (this.value === 'Supervisor') {
+                supervisorFields.style.display = 'block';
+                sciComChairFields.style.display = 'none';
+                userCredentials.style.display = 'block';
+            }
+            else if (this.value === 'SciComChair') {
+                sciComChairFields.style.display = 'block';
+                supervisorFields.style.display = 'none';
+                userCredentials.style.display = 'block';
+            }
+    
+            else {
+                supervisorFields.style.display = 'none';
+                pharmacistFields.style.display = 'none';
+                sciComChairFields.style.display = 'none';
+                anaethesiologistFields.style.display = 'none';
+                userCredentials.style.display = 'none';
+            }
+        });
+    </script>
+}

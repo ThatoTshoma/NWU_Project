@@ -1,0 +1,44 @@
+﻿@model PostGradSystem.CollectionModel.SupervisionCollection
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+        <div class="card-body p-4">
+            <form method="post">
+                <input asp-for="Supervision.SupervisorId" type="hidden" />
+
+                <div class="border p-3">
+
+                    <div class="form-floating py-2 col-12">
+                <select asp-for="Supervision.SelectedStudents" asp-items=@ViewBag.StudentList class="form-control select2" multiple>
+                        </select>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary form-control">Add</button>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a asp-controller="Admin" asp-action="ListSupervisions" asp-route-id="@Model.Supervision.SupervisionId" class="btn btn-outline-primary border form-control">
+                                Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            $(document).ready(function () {
+                $('.select2').select2({
+                    placeholder: "Select Students",
+                    allowClear: true
+                });
+
+            });
+        </script>
+    }
