@@ -1,0 +1,21 @@
+
+# Visual Studio temporary files
+.vs/
+*.suo
+*.user
+*.cache
+
+# Build outputs
+bin/
+obj/
+.vs/
+
+# Other common ignores
+DesignTimeBuild/
+.dtbcache.v2
+.futdcache.v2
+*.v9.bin
+*.vsidx
+DocumentLayout.json
+ProjectEvaluation/
+
